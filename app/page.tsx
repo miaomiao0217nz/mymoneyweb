@@ -33,7 +33,7 @@ export default function Home() {
           <button onClick={() => moveBy(1)}>&gt;&gt;</button>
         </div>
 
-        <PieChart date={date} />
+        <PieChart date={date} /> 
       </div>
     </main>
   )
