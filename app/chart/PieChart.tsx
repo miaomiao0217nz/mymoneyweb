@@ -97,6 +97,7 @@ export const PieChart = ({ date }: { date: Date | null }) => {
             <div style={{ width: '500px', margin: "0 auto" }}>
                 {trans.length > 0 &&
                     <Doughnut
+                    //@ts-ignore
                         ref={chartRef}
                         onClick={onClick}
                         data={data} />

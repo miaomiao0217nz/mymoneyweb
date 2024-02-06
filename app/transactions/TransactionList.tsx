@@ -39,6 +39,14 @@ export const TransactionList=  ({transactions}:{transactions:Transaction[]})=>{
                         )
                     })
                 }
+                    { transactions && transactions.length>0 &&
+                    <tr>
+                        <th>Total</th>
+                        <th  colSpan={7} style={{textAlign:'right'}}>
+                            {transactions.map(t=>t.amount).reduce((partialSum, a) => partialSum + a, 0).toFixed(2)}
+                        </th>
+                    </tr>
+                    }
                 </tbody>
             </table>
             </div>
