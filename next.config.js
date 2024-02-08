@@ -1,21 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  distDir: 'dist'
+  distDir: 'dist',
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:8080/api/:path*' // Proxy to Backend
+      },
+      {
+        source: '/login',
+        destination: 'http://localhost:8080/login' // Proxy to Backend
+      },
+    ];
+  }
 }
 
 module.exports = nextConfig
 
-
-module.exports = nextConfig
-//  {
-//     async rewrites() {
-//       return [
-//         {
-//           source: '/api/:path*',
-//           destination: 'https://sohpie0217nzmymoneyapi.azurewebsites.net/api/:path*' // Proxy to Backend
-//         }
-//       ]
-//     }
-//   }
 

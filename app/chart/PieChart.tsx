@@ -34,12 +34,20 @@ const unique = (o: any[]) => {
 }
 const sum = (partialSum: number, a: number) => partialSum + a;
 
-const getData = (year: number, month: number, setData: (data: any) => any) => {
-    fetch(`/api/money/${year}/${month}`).then(
-        resp => {
-            resp.json().then(ts => setData(ts))
-        }
-    );
+const getData = (date: Date, setData: (data: any) => any) => {
+    if (typeof window !== "undefined") {
+        const token = window.localStorage.getItem("token");
+        const headers = new Headers();
+        headers.append("Authorization", "Bearer " + token);
+
+        fetch(`/api/transaction/${date.toISOString().substring(0,10)}`, {
+            headers
+        }).then(
+            resp => {
+                resp.json().then(ts => setData(ts))
+            }
+        );
+    }
 }
 
 const excludes = ['Salary', 'null', 'Transfer', 'House'];
@@ -50,7 +58,7 @@ export const PieChart = ({ date }: { date: Date | null }) => {
 
     useEffect(() => {
         if (date)
-            getData(date.getFullYear(), date.getMonth() + 1, setTransactions);
+            getData(date, setTransactions);
     }, [date]);
 
     const trans = transactions.filter(t => !excludes.includes(t.category));
@@ -97,7 +105,7 @@ export const PieChart = ({ date }: { date: Date | null }) => {
             <div style={{ width: '500px', margin: "0 auto" }}>
                 {trans.length > 0 &&
                     <Doughnut
-                    //@ts-ignore
+                        //@ts-ignore
                         ref={chartRef}
                         onClick={onClick}
                         data={data} />
